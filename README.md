@@ -7,7 +7,8 @@ the core of this is a tiny function in obj.c. `mkcaller(object, function)`, as t
 The function it returns only has three jobs:
 - place the `object` in question onto the register `rax`
 - place the `function` in question onto the register `r10`
-- call r10
+- call `r10`
+
 The object and function are embedded in constants in the bytecode.
 
 The other important factor is a macro defined in obj.h. The `SELF(type)` macro needs to go at the beginning of any method, and has two jobs:
