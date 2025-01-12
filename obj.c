@@ -26,6 +26,7 @@ void *mkcaller(void* object, void* function) {
 
     *fnptr = function;
     *x = object;
+    mprotect(call, sizeof(cf), PROT_READ | PROT_EXEC);
     return call;
 }
 
