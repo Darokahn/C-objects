@@ -1,6 +1,7 @@
 # THIS IS NOT MEANT TO BE PRACTICAL
 It's just for fun and to demonstrate how much low-level power you have in C.
 It ONLY works on x86-64 architecture. Here be dragons if you're on Windows or Mac, I have no idea if it's os-specific.
+It currently asks to map an entire page for every function caller, and the kernel does not optimize this. If you plan on using this at all, I recommend writing an allocator so each caller gets a 23 byte section of a single page. I may patch this in the future. Until then, have fun leaking 4kb per method.
 
 # The implementation:
 the core of this is a tiny function in obj.c. `mkcaller(object, function)`, as the name implies creates a caller for the `function` that binds the `object` to it. It returns a clone of the caller template (system-dependent bytecode), allocated inside executable memory.
