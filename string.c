@@ -4,6 +4,14 @@
 #include "string.h"
 #include "obj.h"
 
+void growTo(int capacity) {
+    SELF(string);
+    if (self->capacity < capacity) {
+        self->str = realloc(self->str, capacity);
+        self->capacity = capacity;
+    }
+}
+
 int concat(char* new) {
     SELF(string);
     int total = strlen(new) + self->length;
@@ -27,6 +35,17 @@ int cut(int index, int amount) {
     return total;
 }
 
+void insert(int index, char c) {
+    SELF(string);
+    if (index > self->length || index < 0) {
+        return;
+    }
+    self->growTo(self->length + 1);
+    self->length++;
+    memmove(self->str + index + 1, self->str + index, self->length - index);
+    self->str[index] = c;
+}
+
 void print() {
     SELF(string);
     printf("%s\n", self->str);
@@ -40,5 +59,7 @@ void String(string* s, char* initial) {
     s->concat = mkcaller(s, concat);
     s->cut = mkcaller(s, cut);
     s->print = mkcaller(s, print);
+    s->insert = mkcaller(s, insert);
+    s->growTo = mkcaller(s, growTo);
 }
 

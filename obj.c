@@ -2,11 +2,11 @@
 #include <string.h>
 
 char cf[] = { // minimal object code for the caller with 0x0 placeholders. Hand-written; about half the size of gcc-generated equivalent. Architecture-dependent.
-    0x48, 0xba,                // movabs r10 (r10 is not used in the calling convention used by C on x86-64, and it is caller-saved)
+    0x49, 0xba,                // movabs r10 (r10 is not used in the calling convention used by C on x86-64, and it is caller-saved)
     0, 0, 0, 0, 0, 0, 0, 0,    // 0
-    0x48, 0xb8,                // movabs rax
+    0x49, 0xbb,                // movabs rax
     0, 0, 0, 0, 0, 0, 0, 0,    // 0
-    0xff, 0xd2,                // call r10
+    0x41, 0xff, 0xd2,                // call r10
     0xc3                       // ret
 };
 // movabs is necessary for the cpu to understand it should use the next 8 bytes as a constant. movq does not work and assumes a constant size of 4.

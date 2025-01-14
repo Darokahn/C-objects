@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 #include "string.h"
 
 int main() {
@@ -9,6 +8,10 @@ int main() {
     s.concat("p world");
     s.print();
     s.cut(5, 1);
+    s.print();
+    s.insert(5, ',');
+    s.print();
+    s.concat("!");
     s.print();
 
     string s2;

@@ -4,9 +4,9 @@ It ONLY works on x86-64 architecture. Here be dragons if you're on Windows or Ma
 It currently asks to map an entire page for every function caller, and the kernel does not optimize this. If you plan on using this at all, I recommend writing an allocator so each caller gets a 23 byte section of a single page. I may patch this in the future. Until then, have fun leaking 4kb per method.
 
 # The implementation:
-the core of this is a tiny function in obj.c. `mkcaller(object, function)`, as the name implies, creates a caller for the `function` that binds the `object` to it. It returns a clone of the caller template (system-dependent bytecode), allocated inside executable memory.
+the core of this is a tiny function in obj.c. `mkcaller(object, function)`, as the name implies creates a caller for the `function` that binds the `object` to it. It returns a clone of the caller template (system-dependent bytecode), allocated inside executable memory.
 The function it returns only has three jobs:
-- place the `object` in question onto the register `rax`
+- place the `object` in question onto the register `r11`
 - place the `function` in question onto the register `r10`
 - call `r10`
 
@@ -14,7 +14,7 @@ The object and function are embedded in constants in the bytecode.
 
 The other important factor is a macro defined in obj.h. The `SELF(type)` macro needs to go at the beginning of any method, and has two jobs:
 - initialize `self` as a pointer to the specified type.
-- use an assembly routine to move `rax` into `self`. (because the caller function places the object onto `rax`, this is where we can expect to find it).
+- use an assembly routine to move `r11` into `self`. (because the caller function places the object onto `rax`, this is where we can expect to find it).
 Using this macro keeps the actual implementation abstract, and makes methods easy to create.
 
 # To use:

@@ -9,6 +9,8 @@ typedef struct {
     int (*concat)(char*);
     int (*cut)(int, int);
     void (*print)();
+    void (*insert)(int, char);
+    void (*growTo)(int);
 } string;
 
 void String(string*, char*);
