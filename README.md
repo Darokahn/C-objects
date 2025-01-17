@@ -14,7 +14,7 @@ The object and function are embedded in constants in the bytecode.
 
 The other important factor is a macro defined in obj.h. The `SELF(type)` macro needs to go at the beginning of any method, and has two jobs:
 - initialize `self` as a pointer to the specified type.
-- use an assembly routine to move `r11` into `self`. (because the caller function places the object onto `rax`, this is where we can expect to find it).
+- use an assembly routine to move `r11` into `self`. (because the caller function places the object onto `r11`, this is where we can expect to find it).
 Using this macro keeps the actual implementation abstract, and makes methods easy to create.
 
 # To use:
