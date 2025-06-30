@@ -61,7 +61,7 @@ char cf[] = { // minimal object code for the caller with 0x0 placeholders. Hand-
     0, 0, 0, 0, 0, 0, 0, 0,    // 0
     0x49, 0xbb,                // movabs r11
     0, 0, 0, 0, 0, 0, 0, 0,    // 0
-    0x41, 0xff, 0xe2,                // call r10
+    0x41, 0xff, 0xe2,                // jmp r10
     0xc3                       // ret
 };
 // movabs is necessary for the cpu to understand it should use the next 8 bytes as a constant. movq does not work and assumes a constant size of 4.
